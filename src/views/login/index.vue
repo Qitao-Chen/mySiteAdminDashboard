@@ -3,32 +3,32 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">My Blog Admin DashBoard</h3>
       </div>
-
-      <el-form-item prop="username">
+      <!-- admin account -->
+      <el-form-item prop="loginId">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
+          ref="loginId"
+          v-model="loginForm.loginId"
           placeholder="Username"
-          name="username"
+          name="loginId"
           type="text"
           tabindex="1"
           auto-complete="on"
         />
       </el-form-item>
-
-      <el-form-item prop="password">
+      <!-- admin pwd -->
+      <el-form-item prop="loginPwd">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="loginForm.loginPwd"
           :type="passwordType"
           placeholder="Password"
           name="password"
@@ -41,20 +41,44 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+       <!-- verify code -->
+      <div class="captchaContainer">
+          <el-form-item prop="captcha" class="captchaInput">
+        <span class="svg-container">
+          <svg-icon icon-class="nested" />
+        </span>
+        <el-input
+          ref="captcha"
+          v-model="loginForm.captcha"
+          placeholder="verification code"
+          name="captcha"
+          type="text"
+          tabindex="3"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <div 
+      class="captchaImg"
+      @click="getCaptchaFunc"
+      v-html="svg"
+      >
       </div>
+    </div>
 
+   <!-- No login for 7 days  -->
+    <div>
+      <!-- `checked` should be true or false -->
+      <el-checkbox v-model="loginForm.checked">Keep me signed in for the next 7 days</el-checkbox>
+    </div>
+
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;margin-top:15px;" @click.native.prevent="handleLogin">Login</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-
+import { validUsername } from '@/utils/validate';
+import {getCaptcha} from '@/api/captcha.js';
 export default {
   name: 'Login',
   data() {
@@ -72,18 +96,35 @@ export default {
         callback()
       }
     }
+    //check password
+    const checkPassword = (rule,value,callback)=>{
+     const reg = /0212412/;
+     if(reg.test(value)){
+       callback();//验证通过
+     }else{
+       callback(new Error('Password format is wrong'))
+     }
+    }
     return {
-      loginForm: {
-        username: 'admin',
-        password: '111111'
+      svg:'',
+      loginForm:{
+        loginId:'',
+        loginPwd:'',
+        captcha:'',
+        checked: true,
       },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+      loginRules:{
+        loginId:[{required: true, trigger:'blur',message:"Please input admin account"}],
+        loginPwd:[{required: true, trigger:'blur',message:"Please input admin password"},
+        {min:6,max:15,message:"minimum 6 characters and maximum 15 characters",trigger:'blur'},
+        {validator:checkPassword,trigger:'blur'}
+        ],
+        captcha:[{required: true, trigger:'blur',message:"Please input verification code"},
+        {min:4,max:4,message:"Length should be 4", trigger:'blur'}
+        ]
       },
-      loading: false,
-      passwordType: 'password',
-      redirect: undefined
+      passwordType:'password',
+      loading:false,
     }
   },
   watch: {
@@ -93,6 +134,10 @@ export default {
       },
       immediate: true
     }
+  },
+  created(){
+    // get verification code at start
+    this.getCaptchaFunc()
   },
   methods: {
     showPwd() {
@@ -106,6 +151,7 @@ export default {
       })
     },
     handleLogin() {
+      //this.$refs.loginForm.validate===> https://element.eleme.io/#/en-US/component/form#form-Events
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -120,6 +166,11 @@ export default {
           return false
         }
       })
+    },
+    //get verification code
+   async getCaptchaFunc(){
+     const res = await getCaptcha()
+    this.svg =res
     }
   }
 }
@@ -233,5 +284,17 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
+}
+.captchaInput{
+  width: 70%;
+}
+.captchaContainer{
+  display: flex;
+}
+.captchaImg{
+  width: 150px;
+  height: 50px;
+  margin-left: 2px;
+  margin-top: 2px;
 }
 </style>
