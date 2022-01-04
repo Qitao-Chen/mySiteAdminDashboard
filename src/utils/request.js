@@ -19,12 +19,16 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
-    if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+    // if (store.getters.token) {
+    //   // let each request carry token
+    //   // ['X-Token'] is a custom headers key
+    //   // please modify it according to the actual situation
+    //   config.headers['X-Token'] = getToken()
+    // }
+    const token = localStorage.getItem('adminToken');
+    console.log(token)
+    if (token) {
+      config.headers['Authorization'] = "Bearer " + token
     }
     return config
   },
@@ -48,6 +52,10 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    if (response.headers.authentication) {
+      //如果有这个字段需要存到localStorage.之后的请求都需要带着这个token
+      localStorage.adminToken = response.headers.authentication;
+    }
     const res = response.data
     return res
     // if the custom code is not 20000, it is judged as an error.

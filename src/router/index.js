@@ -52,7 +52,8 @@ export const constantRoutes = [{
       component: () => import('@/views/dashboard/index'),
       meta: {
         title: 'Dashboard',
-        icon: 'dashboard'
+        icon: 'dashboard',
+        auth: true,
       }
     }]
   },
@@ -67,7 +68,8 @@ export const constantRoutes = [{
       component: () => import('@/views/banner/index'),
       meta: {
         title: '1st Page Management',
-        icon: 'el-icon-s-home'
+        icon: 'el-icon-s-home',
+        auth: true,
       }
     }]
   },
@@ -79,7 +81,8 @@ export const constantRoutes = [{
     name: 'Blog',
     meta: {
       title: 'Blog Manage',
-      icon: 'el-icon-document'
+      icon: 'el-icon-document',
+      auth: true,
     },
     children: [{
         path: 'blogList',
@@ -87,7 +90,8 @@ export const constantRoutes = [{
         component: () => import('@/views/blogList/index'),
         meta: {
           title: 'Blog List',
-          icon: 'el-icon-s-order'
+          icon: 'el-icon-s-order',
+          auth: true,
         }
       },
       {
@@ -96,7 +100,8 @@ export const constantRoutes = [{
         component: () => import('@/views/blogType/index'),
         meta: {
           title: 'Blog Type',
-          icon: 'el-icon-menu'
+          icon: 'el-icon-menu',
+          auth: true,
         }
       },
       {
@@ -105,7 +110,8 @@ export const constantRoutes = [{
         component: () => import('@/views/addBlog/index'),
         meta: {
           title: 'Add Blog',
-          icon: 'el-icon-document-add'
+          icon: 'el-icon-document-add',
+          auth: true,
         }
       }
     ]
@@ -118,7 +124,8 @@ export const constantRoutes = [{
     name: 'Project',
     meta: {
       title: 'Project Manage',
-      icon: 'el-icon-suitcase'
+      icon: 'el-icon-suitcase',
+      auth: true,
     },
     children: [{
         path: 'projectList',
@@ -126,7 +133,8 @@ export const constantRoutes = [{
         component: () => import('@/views/projectList/index'),
         meta: {
           title: 'Project List',
-          icon: 'el-icon-notebook-1'
+          icon: 'el-icon-notebook-1',
+          auth: true,
         }
       },
       {
@@ -135,7 +143,8 @@ export const constantRoutes = [{
         component: () => import('@/views/addProject/index'),
         meta: {
           title: 'Add Project',
-          icon: 'el-icon-link'
+          icon: 'el-icon-link',
+          auth: true,
         }
       }
     ]
@@ -150,7 +159,8 @@ export const constantRoutes = [{
       component: () => import('@/views/commentManagement/index'),
       meta: {
         title: 'Comment Management',
-        icon: 'el-icon-chat-line-round'
+        icon: 'el-icon-chat-line-round',
+        auth: true,
       }
     }]
   },
@@ -164,7 +174,8 @@ export const constantRoutes = [{
       component: () => import('@/views/message/index'),
       meta: {
         title: 'Message Board',
-        icon: 'el-icon-message'
+        icon: 'el-icon-message',
+        auth: true,
       }
     }]
   },
@@ -178,7 +189,8 @@ export const constantRoutes = [{
       component: () => import('@/views/about/index'),
       meta: {
         title: 'About Me',
-        icon: 'el-icon-user-solid'
+        icon: 'el-icon-user-solid',
+        auth: true,
       }
     }]
   },
@@ -192,7 +204,8 @@ export const constantRoutes = [{
       component: () => import('@/views/setting/index'),
       meta: {
         title: 'Setting',
-        icon: 'el-icon-setting'
+        icon: 'el-icon-setting',
+        auth: true,
       }
     }]
   },
@@ -204,7 +217,7 @@ export const constantRoutes = [{
       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
       meta: {
         title: 'External Link',
-        icon: 'link'
+        icon: 'link',
       }
     }]
   },

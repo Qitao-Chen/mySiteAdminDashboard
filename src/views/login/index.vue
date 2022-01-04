@@ -79,6 +79,7 @@
 <script>
 import { validUsername } from '@/utils/validate';
 import {getCaptcha} from '@/api/captcha.js';
+import '@/permission' // permission control
 export default {
   name: 'Login',
   data() {
@@ -97,14 +98,14 @@ export default {
       }
     }
     //check password
-    const checkPassword = (rule,value,callback)=>{
-     const reg = /0212412/;
-     if(reg.test(value)){
-       callback();//验证通过
-     }else{
-       callback(new Error('Password format is wrong'))
-     }
-    }
+    // const checkPassword = (rule,value,callback)=>{
+    //  const reg = /123123/;
+    //  if(reg.test(value)){
+    //    callback();//验证通过
+    //  }else{
+    //    callback(new Error('Password format is wrong'))
+    //  }
+    // }
     return {
       svg:'',
       loginForm:{
@@ -117,7 +118,7 @@ export default {
         loginId:[{required: true, trigger:'blur',message:"Please input admin account"}],
         loginPwd:[{required: true, trigger:'blur',message:"Please input admin password"},
         {min:6,max:15,message:"minimum 6 characters and maximum 15 characters",trigger:'blur'},
-        {validator:checkPassword,trigger:'blur'}
+        
         ],
         captcha:[{required: true, trigger:'blur',message:"Please input verification code"},
         {min:4,max:4,message:"Length should be 4", trigger:'blur'}
@@ -151,15 +152,27 @@ export default {
       })
     },
     handleLogin() {
-      //this.$refs.loginForm.validate===> https://element.eleme.io/#/en-US/component/form#form-Events
+      //this.$refs.loginForm.validate===> https://element.eleme.io/#/en-US/component/form#form-Methods
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          if(this.loginForm.checked){
+            this.loginForm.remember =7;
+          }
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            console.log('laile')
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
-          }).catch(() => {
-            this.loading = false
+          }).catch((res) => {
+            if(typeof res === 'string'){
+              //verification code error
+              this.$message.error('verification code is incorrect')
+            }else{
+              this.$message.error('account or password is incorrect')
+            }
+            this.getCaptchaFunc();
+            this.loading = false;
+            this.loginForm.captcha = '';
           })
         } else {
           console.log('error submit!!')

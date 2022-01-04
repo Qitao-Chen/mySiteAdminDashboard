@@ -1,0 +1,1 @@
+export let server_URL = 'http://localhost:7001';
