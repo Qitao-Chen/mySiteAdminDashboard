@@ -1,6 +1,6 @@
 <template>
-  <div class="addBlog-container">
-    <BlogEditor model="addBlog" />
+  <div class="editBlog-container">
+    <BlogEditor model="editBlog" />
   </div>
 </template>
 

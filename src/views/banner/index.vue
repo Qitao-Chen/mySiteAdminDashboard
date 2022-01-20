@@ -120,7 +120,7 @@ export default {
     async fetchData() {
       const res = await getBanner();
       this.data = res.data;
-      console.log(this.data);
+
       for (var item of this.data) {
         item.midImgHttp = server_URL + item.midImg;
         item.bigImgHttp = server_URL + item.bigImg;

@@ -31,204 +31,216 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [{
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+  path: '/login',
+  component: () => import('@/views/login/index'),
+  hidden: true
+},
 
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
+{
+  path: '/404',
+  component: () => import('@/views/404'),
+  hidden: true
+},
 
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: {
-        title: 'Dashboard',
-        icon: 'dashboard',
-        auth: true,
-      }
-    }]
-  },
-
-  {
-    path: '/banner',
-    component: Layout,
-    redirect: "/banner",
-    children: [{
-      path: 'banner',
-      name: 'Banner',
-      component: () => import('@/views/banner/index'),
-      meta: {
-        title: '1st Page Management',
-        icon: 'el-icon-s-home',
-        auth: true,
-      }
-    }]
-  },
-
-  {
-    path: '/blog',
-    component: Layout,
-    redirect: '/blogList',
-    name: 'Blog',
+{
+  path: '/',
+  component: Layout,
+  redirect: '/dashboard',
+  children: [{
+    path: 'dashboard',
+    name: 'Dashboard',
+    component: () => import('@/views/dashboard/index'),
     meta: {
-      title: 'Blog Manage',
-      icon: 'el-icon-document',
+      title: 'Dashboard',
+      icon: 'dashboard',
+      auth: true,
+    }
+  }]
+},
+
+{
+  path: '/banner',
+  component: Layout,
+  redirect: "/banner",
+  children: [{
+    path: 'banner',
+    name: 'Banner',
+    component: () => import('@/views/banner/index'),
+    meta: {
+      title: '1st Page Management',
+      icon: 'el-icon-s-home',
+      auth: true,
+    }
+  }]
+},
+
+{
+  path: '/blog',
+  component: Layout,
+  redirect: '/blog/blogList',
+  name: 'Blog',
+  meta: {
+    title: 'Blog Manage',
+    icon: 'el-icon-document',
+    auth: true,
+  },
+  children: [{
+    path: 'blogList',
+    name: 'BlogList',
+    component: () => import('@/views/blogList/index'),
+    meta: {
+      title: 'Blog List',
+      icon: 'el-icon-s-order',
+      auth: true,
+    }
+  },
+  {
+    path: 'blogType',
+    name: 'BlogType',
+    component: () => import('@/views/blogType/index'),
+    meta: {
+      title: 'Blog Type',
+      icon: 'el-icon-menu',
+      auth: true,
+    }
+  },
+  {
+    path: 'addBlog',
+    name: 'AddBlog',
+    component: () => import('@/views/addBlog/index'),
+    meta: {
+      title: 'Add Blog',
+      icon: 'el-icon-document-add',
+      auth: true,
+    }
+  },
+  {
+    path: 'editBlog/:id',
+    name: 'editBlog',
+    component: () => import('@/views/editBlog/index'),
+    meta: {
+      title: 'Edit Blog',
+      icon: 'el-icon-edit',
       auth: true,
     },
-    children: [{
-        path: 'blogList',
-        name: 'BlogList',
-        component: () => import('@/views/blogList/index'),
-        meta: {
-          title: 'Blog List',
-          icon: 'el-icon-s-order',
-          auth: true,
-        }
-      },
-      {
-        path: 'blogType',
-        name: 'BlogType',
-        component: () => import('@/views/blogType/index'),
-        meta: {
-          title: 'Blog Type',
-          icon: 'el-icon-menu',
-          auth: true,
-        }
-      },
-      {
-        path: 'addBlog',
-        name: 'AddBlog',
-        component: () => import('@/views/addBlog/index'),
-        meta: {
-          title: 'Add Blog',
-          icon: 'el-icon-document-add',
-          auth: true,
-        }
-      }
-    ]
-  },
-
-  {
-    path: '/project',
-    component: Layout,
-    redirect: '/projectList',
-    name: 'Project',
-    meta: {
-      title: 'Project Manage',
-      icon: 'el-icon-suitcase',
-      auth: true,
-    },
-    children: [{
-        path: 'projectList',
-        name: 'projectList',
-        component: () => import('@/views/projectList/index'),
-        meta: {
-          title: 'Project List',
-          icon: 'el-icon-notebook-1',
-          auth: true,
-        }
-      },
-      {
-        path: 'addProject',
-        name: 'addProject',
-        component: () => import('@/views/addProject/index'),
-        meta: {
-          title: 'Add Project',
-          icon: 'el-icon-link',
-          auth: true,
-        }
-      }
-    ]
-  },
-
-  {
-    path: '/comment',
-    component: Layout,
-    children: [{
-      path: 'index',
-      name: 'Comment',
-      component: () => import('@/views/commentManagement/index'),
-      meta: {
-        title: 'Comment Management',
-        icon: 'el-icon-chat-line-round',
-        auth: true,
-      }
-    }]
-  },
-
-  {
-    path: '/message',
-    component: Layout,
-    children: [{
-      path: 'index',
-      name: 'message',
-      component: () => import('@/views/message/index'),
-      meta: {
-        title: 'Message Board',
-        icon: 'el-icon-message',
-        auth: true,
-      }
-    }]
-  },
-
-  {
-    path: '/about',
-    component: Layout,
-    children: [{
-      path: 'index',
-      name: 'about',
-      component: () => import('@/views/about/index'),
-      meta: {
-        title: 'About Me',
-        icon: 'el-icon-user-solid',
-        auth: true,
-      }
-    }]
-  },
-
-  {
-    path: '/setting',
-    component: Layout,
-    children: [{
-      path: 'index',
-      name: 'setting',
-      component: () => import('@/views/setting/index'),
-      meta: {
-        title: 'Setting',
-        icon: 'el-icon-setting',
-        auth: true,
-      }
-    }]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [{
-      path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-      meta: {
-        title: 'External Link',
-        icon: 'link',
-      }
-    }]
-  },
-
-
-  // 404 page must be placed at the end !!!
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
+    hidden: true,
   }
+  ]
+},
+
+{
+  path: '/project',
+  component: Layout,
+  redirect: '/projectList',
+  name: 'Project',
+  meta: {
+    title: 'Project Manage',
+    icon: 'el-icon-suitcase',
+    auth: true,
+  },
+  children: [{
+    path: 'projectList',
+    name: 'projectList',
+    component: () => import('@/views/projectList/index'),
+    meta: {
+      title: 'Project List',
+      icon: 'el-icon-notebook-1',
+      auth: true,
+    }
+  },
+  {
+    path: 'addProject',
+    name: 'addProject',
+    component: () => import('@/views/addProject/index'),
+    meta: {
+      title: 'Add Project',
+      icon: 'el-icon-link',
+      auth: true,
+    }
+  }
+  ]
+},
+
+{
+  path: '/comment',
+  component: Layout,
+  children: [{
+    path: 'index',
+    name: 'Comment',
+    component: () => import('@/views/commentManagement/index'),
+    meta: {
+      title: 'Comment Management',
+      icon: 'el-icon-chat-line-round',
+      auth: true,
+    }
+  }]
+},
+
+{
+  path: '/message',
+  component: Layout,
+  children: [{
+    path: 'index',
+    name: 'message',
+    component: () => import('@/views/message/index'),
+    meta: {
+      title: 'Message Board',
+      icon: 'el-icon-message',
+      auth: true,
+    }
+  }]
+},
+
+{
+  path: '/about',
+  component: Layout,
+  children: [{
+    path: 'index',
+    name: 'about',
+    component: () => import('@/views/about/index'),
+    meta: {
+      title: 'About Me',
+      icon: 'el-icon-user-solid',
+      auth: true,
+    }
+  }]
+},
+
+{
+  path: '/setting',
+  component: Layout,
+  children: [{
+    path: 'index',
+    name: 'setting',
+    component: () => import('@/views/setting/index'),
+    meta: {
+      title: 'Setting',
+      icon: 'el-icon-setting',
+      auth: true,
+    }
+  }]
+},
+
+
+{
+  path: 'external-link',
+  component: Layout,
+  children: [{
+    path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+    meta: {
+      title: 'External Link',
+      icon: 'link',
+    }
+  }]
+},
+
+
+// 404 page must be placed at the end !!!
+{
+  path: '*',
+  redirect: '/404',
+  hidden: true
+}
 ]
 
 const createRouter = () => new Router({

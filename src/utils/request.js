@@ -25,8 +25,9 @@ service.interceptors.request.use(
     //   // please modify it according to the actual situation
     //   config.headers['X-Token'] = getToken()
     // }
+    //login请求配置项
     const token = localStorage.getItem('adminToken');
-    console.log(token)
+    console.log('request:::', token)
     if (token) {
       config.headers['Authorization'] = "Bearer " + token
     }
